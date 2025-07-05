@@ -110,13 +110,15 @@ class DriverUpdateLicenseNumberView(LoginRequiredMixin, generic.UpdateView):
 
 class DriverAssignToCarView(LoginRequiredMixin, generic.View):
     def post(self, request, pk): # noqa
-        car = get_object_or_404(Car, pk=pk)
-        car.drivers.add(request.user)
+        if isinstance(request.user, Driver):
+            car = get_object_or_404(Car, pk=pk)
+            car.drivers.add(request.user)
         return redirect("taxi:car-detail", pk=pk)
 
 
 class DriverDeleteFromCarView(LoginRequiredMixin, generic.View):
     def post(self, request, pk): # noqa
-        car = get_object_or_404(Car, pk=pk)
-        car.drivers.remove(request.user)
+        if isinstance(request.user, Driver):
+            car = get_object_or_404(Car, pk=pk)
+            car.drivers.remove(request.user)
         return redirect("taxi:car-detail", pk=pk)

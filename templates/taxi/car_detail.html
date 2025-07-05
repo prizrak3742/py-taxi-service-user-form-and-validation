@@ -4,7 +4,7 @@
   <h1>
     {{ car.model }}
 
-    {% if user in car.drivers.all %}
+    {% if user in car.drivers.all() %}
       <form method="POST" action="{% url 'taxi:delete_from_car' car.id %}">
         {% csrf_token %}
         <input class="btn btn-danger" type="submit" value="Delete me from this car">
