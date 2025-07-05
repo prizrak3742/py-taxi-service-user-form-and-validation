@@ -24,10 +24,12 @@ class DriverCreationForm(UserCreationForm):
             "first_name", "last_name", "license_number"
         )
 
-    def clean_license(self):
+    def clean_license_number(self):
         license = self.cleaned_data['license_number']
 
         if (len(license) != 8
+                or
+                not license[:3].isalpha()
                 or
                 not license[:3].isupper()
                 or
